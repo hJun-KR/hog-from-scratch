@@ -2,6 +2,8 @@
 #include "../include/image.h"
 
 int main(int argc, char** argv) {
+    /** 
+     * 이미지 조회, 한줄 픽셀 바꾸기, 복사, 이미지 생성
     log_debug("MAIN", "main 함수 실행");
     Image test("test.jpg");
     test.write("new.png");
@@ -14,6 +16,19 @@ int main(int argc, char** argv) {
 
     Image blank(100, 100, 3);
     blank.write("blank.jpg");
+    */
+
+    Image test("test1.jpg");
+
+    Image gray_avg = test;
+    gray_avg.grayscale_avg();
+    gray_avg.write("gray_avg.png");
+
+    Image gray_lum = test;
+    gray_lum.grayscale_lum();
+    gray_lum.write("gray_lum.png");
+
+
 
     return 0;
 }
