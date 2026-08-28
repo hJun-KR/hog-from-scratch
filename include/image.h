@@ -69,6 +69,20 @@ struct Image {
      * @return 판별된 ImageType 열거형 값 (PNG, JPG, BMP, TGA)
      */
     ImageType getFileType(const char* filename);
+
+    /**
+     * @brief 산술 평균 방식(Average Method)으로 이미지를 흑백(Grayscale)으로 변환합니다.
+     *        (R + G + B) / 3
+     * @return 변환된 자신 객체의 참조자 (Image&)
+     */
+    Image& grayscale_avg();
+
+    /**
+     * @brief 인간의 시각 인지 가중치 방식(Luminance/Luma Method)으로 이미지를 흑백(Grayscale)으로 변환합니다.
+     *        (0.2126 * R + 0.7152 * G + 0.0722 * B)
+     * @return 변환된 자신 객체의 참조자 (Image&)
+     */
+    Image& grayscale_lum();
 };
 
 #endif // IMAGE_H
