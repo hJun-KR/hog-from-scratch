@@ -143,3 +143,41 @@ ImageType Image::getFileType(const char* filename) {
     log_debug("IMAGE", "확장자를 찾을 수 없어 기본 포맷(PNG)으로 지정합니다.\n");
     return PNG;
 }
+
+/**
+ * @brief 단순 산술 평균 방식((R+G+B)/3)으로 이미지를 흑백 변환합니다.
+ * @return 변환된 이미지 객체의 참조자 (*this)
+ */
+Image& Image::grayscale_avg() {
+    log_debug("IMAGE", "grayscale_avg() 연산 시작 (채널 수: %d)\n", channels);
+    
+    if (channels < 3) {
+        log_error("IMAGE", "채널 수(%d)가 3보다 작아 그레이스케일 변환을 진행하지 않습니다.\n", channels);
+    } else {
+        for (int i = 0; i < size; i += channels) {
+            int gray = (data[i] + data[i+1] + data[i+2]) / 3;
+            memset(data + i, gray, 3);
+        }
+        log_info("IMAGE", "산술 평균 Grayscale 변환 완료\n");
+    }
+    return *this;
+}
+
+/**
+ * @brief 인간 시각 인지 가중치 방식(Luminance: 0.2126R + 0.7152G + 0.0722B)으로 이미지를 흑백 변환합니다.
+ * @return 변환된 이미지 객체의 참조자 (*this)
+ */
+Image& Image::grayscale_lum() {
+    log_debug("IMAGE", "grayscale_lum() 연산 시작 (채널 수: %d)\n", channels);
+
+    if (channels < 3) {
+        log_error("IMAGE", "채널 수(%d)가 3보다 작아 그레이스케일 변환을 진행하지 않습니다.\n", channels);
+    } else {
+        for (int i = 0; i < size; i += channels) {
+            int gray = static_cast<int>(0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]);
+            memset(data + i, gray, 3);
+        }
+        log_info("IMAGE", "Luminance 가중치 Grayscale 변환 완료\n");
+    }
+    return *this;
+}
