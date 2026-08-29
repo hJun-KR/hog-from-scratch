@@ -83,6 +83,15 @@ struct Image {
      * @return 변환된 자신 객체의 참조자 (Image&)
      */
     Image& grayscale_lum();
+
+    /**
+     * @brief 각 채널 값에 지정된 비율을 곱해 색상 마스크를 적용합니다.
+     * @param r Red 채널에 곱할 비율
+     * @param g Green 채널에 곱할 비율
+     * @param b Blue 채널에 곱할 비율
+     * @return 변환된 자신 객체의 참조자 (Image&)
+     */
+    Image& colorMask(float r, float g, float b);
 };
 
 #endif // IMAGE_H
