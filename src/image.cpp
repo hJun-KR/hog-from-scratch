@@ -181,3 +181,23 @@ Image& Image::grayscale_lum() {
     }
     return *this;
 }
+
+/**
+ * @brief 각 채널 값에 지정된 비율을 곱해 색상 마스크를 적용합니다.
+ * @param r Red 채널에 곱할 비율
+ * @param g Green 채널에 곱할 비율
+ * @param b Blue 채널에 곱할 비율
+ * @return 변환된 이미지 객체의 참조자 (*this)
+ */
+Image& Image::colorMask(float r, float g, float b) {
+    if (channels < 3) {
+        log_error("IMAGE", "이미지의 채널 수가 세개 미만입니다. 이 작업을 수행하려면 세개 이상의 채널이 필요합니다. 현재 채널 수 : %d \n", channels);
+    } else {
+        for (int i = 0; i < size; i += channels) {
+            data[i] *= r;
+            data[i+1] *= g;
+            data[i+2] *= b;
+        }
+    }
+    return *this;
+}
