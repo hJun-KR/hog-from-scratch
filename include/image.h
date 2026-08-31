@@ -92,6 +92,15 @@ struct Image {
      * @return 변환된 자신 객체의 참조자 (Image&)
      */
     Image& colorMask(float r, float g, float b);
+
+    /**
+     * @brief (x, y) 좌표의 픽셀 값을 가져옵니다. 이미지 범위를 벗어나면 가장자리 픽셀 값으로 Clamp 처리합니다.
+     * @param x 가로 좌표
+     * @param y 세로 좌표
+     * @param c 채널 인덱스 (기본값 0: Grayscale)
+     * @return 픽셀 값 (0 ~ 255)
+     */
+    uint8_t getPixelClamped(int x, int y, int c = 0) const;
 };
 
 #endif // IMAGE_H
