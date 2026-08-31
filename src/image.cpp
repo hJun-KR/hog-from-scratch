@@ -201,3 +201,23 @@ Image& Image::colorMask(float r, float g, float b) {
     }
     return *this;
 }
+
+/**
+ * @brief 지정한 (x, y) 좌표와 채널의 픽셀 값을 반환하며, 이미지 경계를 벗어날 경우 가장자리 값으로 고정(Clamp)합니다.
+ * @param x 읽어올 픽셀의 X 좌표 (가로)
+ * @param y 읽어올 픽셀의 Y 좌표 (세로)
+ * @param c 읽어올 채널 인덱스 (기본값: 0, Grayscale 또는 Red)
+ * @return 경계 처리(Clamp)가 적용된 픽셀 값 (0 ~ 255)
+ */
+uint8_t Image::getPixelClamped(int x, int y, int c) const {
+    // 이미지 좌우 경계 처리 (X 좌표 Clamp)
+    if (x < 0) x = 0;
+    if (x >= w) x = w - 1;
+
+    // 이미지 상하 경계 처리 (Y 좌표 Clamp)
+    if (y < 0) y = 0;
+    if (y >= h) y = h - 1;
+
+    // 2차원 (x, y) 및 채널(c) 좌표를 1차원 메모리 버퍼 인덱스로 변환하여 픽셀 값 반환
+    return data[(y * w + x) * channels + c];
+}
